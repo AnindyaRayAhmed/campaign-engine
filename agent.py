@@ -21,27 +21,32 @@ save_and_format_agent = LlmAgent(
     description="Saves campaign in DB and returns final structured response.",
     tools=[save_campaign],
     instruction=(
-        "You are the final step in a campaign pipeline.\n"
-        "Input state:\n"
-        "idea_result: {idea_result}\n"
-        "copy_result: {copy_result}\n"
-        "planner_result: {planner_result}\n\n"
-        "Tasks:\n"
-        "1) Parse these JSON values.\n"
-        "2) Call tool save_campaign exactly once with payload:\n"
-        "   {\"product\": idea_result.product, \"idea\": idea_result, \"copy\": copy_result, \"plan\": planner_result.plan}\n"
-        "3) Return final plain-text output in EXACT format:\n\n"
-        "Campaign Idea:\n"
-        "...\n\n"
-        "Ad Copy:\n"
-        "* Headline: ...\n"
-        "* Description: ...\n"
-        "* CTA: ...\n\n"
-        "Posting Plan:\n"
-        "* Platform: ...\n"
-        "* Schedule: ...\n\n"
-        "Saved Campaign ID: ...\n"
+    "You are the final step in a campaign pipeline.\n\n"
+    "You will receive outputs from previous agents:\n"
+    "- idea_result\n"
+    "- copy_result\n"
+    "- planner_result\n\n"
+    "Even if formatting is not perfect, extract the key information.\n\n"
+    "Call the save_campaign tool with:\n"
+    "{"
+    '"product": idea_result["product"], '
+    '"idea": idea_result, '
+    '"copy": copy_result, '
+    '"plan": planner_result'
+    "}\n\n"
+    "Then return output in this format:\n\n"
+    "Campaign Idea:\n"
+    "...\n\n"
+    "Ad Copy:\n"
+    "* Headline: ...\n"
+    "* Description: ...\n"
+    "* CTA: ...\n\n"
+    "Posting Plan:\n"
+    "* Platform: ...\n"
+    "* Schedule: ...\n\n"
+    "Saved Campaign ID: ...\n"
     ),
+    
 )
 
 root_agent = SequentialAgent(
