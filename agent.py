@@ -20,7 +20,7 @@ save_and_format_agent = LlmAgent(
     model=MODEL,
     description="Saves campaign in DB and returns final structured response.",
     tools=[save_campaign],
-   instruction=(
+    instruction=(
     "You are the final step in a campaign pipeline.\n\n"
     "You will receive outputs from previous agents:\n"
     "- idea_result\n"
