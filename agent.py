@@ -4,7 +4,6 @@ Pipeline:
 User Input -> Idea Agent -> Copy Agent -> Planner Agent -> Save to SQLite
 """
 
-from dotenv import load_dotenv
 from google.adk.agents.llm_agent import LlmAgent
 from google.adk.agents.sequential_agent import SequentialAgent
 from google.adk.apps import App
@@ -12,8 +11,6 @@ from google.adk.apps import App
 from sub_agents import MODEL, copy_agent, idea_agent, planner_agent
 from tools import save_campaign
 
-# Load .env values for local runs.
-load_dotenv()
 
 save_and_format_agent = LlmAgent(
     name="SaveAndFormatAgent",
