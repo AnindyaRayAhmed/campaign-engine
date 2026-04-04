@@ -11,7 +11,7 @@ idea_agent = LlmAgent(
     instruction=(
         "You are the Idea Agent for a marketing team. "
         "The user message will look like: 'Create a campaign for [product]'. "
-        "Extract product name and create a simple, creative campaign concept. "
+        "Extract product name and create a simple, creative campaign concept including an emotional hook and the main problem it solves. "
         "Return ONLY valid JSON with this exact schema: "
         '{"product":"...","concept":"...","target_audience":"...","hook":"..."}'
     ),
