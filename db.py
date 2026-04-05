@@ -89,3 +89,51 @@ def fetch_campaigns(db_path: str = DEFAULT_DB_PATH) -> List[Dict[str, Any]]:
             }
         )
     return campaigns
+
+def init_brand_table():
+    conn = sqlite3.connect("campaigns.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS brand (
+        brand TEXT PRIMARY KEY,
+        tone TEXT,
+        colors TEXT
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+
+
+def save_brand(brand, tone, colors):
+    conn = sqlite3.connect("campaigns.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    INSERT OR REPLACE INTO brand (brand, tone, colors)
+    VALUES (?, ?, ?)
+    """, (brand, tone, colors))
+
+    conn.commit()
+    conn.close()
+
+    return {"status": "brand_saved"}
+
+
+def get_brand(brand):
+    conn = sqlite3.connect("campaigns.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM brand WHERE brand=?", (brand,))
+    result = cursor.fetchone()
+
+    conn.close()
+
+    if result:
+        return {
+            "brand": result[0],
+            "tone": result[1],
+            "colors": result[2]
+        }
+    return {"status": "not_found"}
